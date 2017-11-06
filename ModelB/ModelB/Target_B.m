@@ -13,7 +13,8 @@
 - (UIViewController *)Action_viewController:(NSDictionary *)params
 {
     NSString *contentText = params[@"contentText"];
-    BViewController *viewController = [[BViewController alloc] initWithContentText:contentText];
+    id block = params[@"block"];
+    BViewController *viewController = [[BViewController alloc] initWithContentText:contentText block:block];
     return viewController;
 }
 @end

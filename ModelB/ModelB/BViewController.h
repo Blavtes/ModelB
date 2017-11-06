@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//typedef void ^(test) (NSString *log);
 @interface BViewController : UIViewController
 
-- (instancetype)initWithContentText:(NSString *)contentText;
+- (instancetype)initWithContentText:(NSString *)contentText block:(void (^)(NSString *))block;
 
 @end

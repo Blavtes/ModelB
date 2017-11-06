@@ -8,21 +8,22 @@
 
 #import "BViewController.h"
 #import <HandyFrame/UIView+LayoutMethods.h>
-
+typedef void  (^test)(NSString *log);
 @interface BViewController ()
 
 @property (nonatomic, strong) UILabel *contentLabel;
-
+@property (nonatomic ,copy) test testBlock;
 @end
 
 @implementation BViewController
 
 #pragma mark - life cycle
-- (instancetype)initWithContentText:(NSString *)contentText
+- (instancetype)initWithContentText:(NSString *)contentText block:(void (^)(NSString *))block
 {
     self = [super init];
     if (self) {
         self.contentLabel.text = contentText;
+        self.testBlock = block;
     }
     return self;
 }
@@ -32,6 +33,25 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.contentLabel];
+    UIButton *leftBarButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    //    [leftBarButton setBackgroundColor:[UIColor magentaColor] forState:UIControlStateNormal];
+//    [leftBarButton setImage:[UIImage imageWithName:@"common_close_normal_greenGround"] forState:UIControlStateNormal];
+//    [leftBarButton setImage:[UIImage imageWithName:@"common_close_selected_greenGround"] forState:UIControlStateHighlighted];
+    [leftBarButton setImageEdgeInsets:UIEdgeInsetsMake(10, 15, 0, 0)];
+    [leftBarButton setTitle:@"backkkk" forState:UIControlStateNormal];
+    //  监听点击事件
+    [leftBarButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:leftBarButton];
+    [leftBarButton centerEqualToView:self.view];
+
+}
+
+- (void)back
+{
+    if (self.testBlock) {
+        self.testBlock(@"lsllfl");
+    }
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewWillLayoutSubviews
